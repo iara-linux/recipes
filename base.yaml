@@ -1,0 +1,77 @@
+{{ $architecture := or .architecture "arm64" }}
+{{ $suite := or .suite "trixie" }}
+{{ $ospack := or .ospack (printf "ospack-debian-%s" $architecture) }}
+
+architecture: {{ $architecture }}
+
+actions:
+  - action: debootstrap
+    description: Bootstrap debian
+    suite: {{ $suite }}
+    components:
+      - main
+    mirror: https://deb.debian.org/debian
+    variant: minbase
+
+  - action: run
+    description: Set hostname
+    command: echo "debos-test" > ${ROOTDIR}/etc/hostname
+
+  - action: overlay
+    source: overlays/
+    destination: /
+
+  - action: apt
+    description: Install some packages
+    packages:
+      - systemd-sysv
+      - sudo
+      - openssh-server
+      - adduser
+      - nano
+      - u-boot-menu
+      - rsync
+      - iproute2
+      - dbus
+      - initramfs-tools
+      - e2fsprogs
+
+  - action: run
+    description: Setup user
+    chroot: true
+    script: scripts/setup-user.sh
+
+  - action: run
+    description: Setup networking
+    chroot: true
+    script: scripts/setup-networking.sh
+
+  - action: image-partition
+    description: Partition the image
+    imagename: {{ $ospack }}.img
+    imagesize: 1GiB
+    partitiontype: gpt
+    partitions:
+      - name: boot
+        fs: ext4
+        start: 1MiB
+        end: 129MiB
+      - name: root
+        fs: ext4
+        start: 129MiB
+        end: 100%
+        parttype: "b921b045-1df0-41c3-af44-4c6f280d3fae"
+    mountpoints:
+      - mountpoint: /
+        partition: root
+        options: [ x-systemd.growfs ]
+      - mountpoint: /boot
+        partition: boot
+
+  - action: filesystem-deploy
+    description: Deploy the filesystems
+
+  - action: install-deb
+    packages:
+      - linux-image-7.2.0-rc7-g75a47f381b8c_7.2.0~rc7_arm64.deb
+      - pool-partitions_0.1_all.deb

@@ -1,0 +1,15 @@
+[Match]
+Name=usb0 enx*
+
+[Network]
+# This is the static IP of your Debian device on the USB network
+Address=10.42.0.1/24
+DHCPServer=yes
+# USB gadget links often don't report carrier reliably; configure regardless
+ConfigureWithoutCarrier=yes
+
+[DHCPServer]
+# Hands out IPs starting at 10.42.0.100
+PoolOffset=100
+PoolSize=50
+EmitDNS=no
