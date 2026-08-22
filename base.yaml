@@ -23,6 +23,7 @@ actions:
 
   - action: apt
     description: Install some packages
+    recommends: true
     packages:
       - systemd-sysv
       - sudo
@@ -35,6 +36,7 @@ actions:
       - dbus
       - initramfs-tools
       - e2fsprogs
+      - netbase
 
   - action: run
     description: Setup user
@@ -64,7 +66,6 @@ actions:
     mountpoints:
       - mountpoint: /
         partition: root
-        options: [ x-systemd.growfs ]
       - mountpoint: /boot
         partition: boot
 
@@ -73,5 +74,6 @@ actions:
 
   - action: install-deb
     packages:
-      - linux-image-7.2.0-rc7-g75a47f381b8c_7.2.0~rc7_arm64.deb
-      - pool-partitions_0.1_all.deb
+      - firmware-amazon.deb
+      - kernel.deb
+      - pool-partitions.deb
