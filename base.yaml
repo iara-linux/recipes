@@ -77,3 +77,4 @@ actions:
       - firmware-amazon.deb
       - kernel.deb
       - pool-partitions.deb
+      - usb-network-gadget.deb
