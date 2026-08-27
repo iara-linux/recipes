@@ -23,7 +23,7 @@ actions:
 
   - action: apt
     description: Install some packages
-    recommends: true
+    recommends: false
     packages:
       - systemd-sysv
       - sudo
@@ -37,6 +37,21 @@ actions:
       - initramfs-tools
       - e2fsprogs
       - netbase
+      - linux-sysctl-defaults
+      - busybox
+      - zstd
+      - dmsetup
+      - kpartx
+      - parted
+      - ca-certificates
+      - systemd-timesyncd
+      - network-manager
+      - wpasupplicant
+      - wireless-regdb
+      - iw
+      - polkitd
+      - libpam-systemd
+      - iputils-ping
 
   - action: run
     description: Setup user
@@ -75,6 +90,8 @@ actions:
   - action: install-deb
     packages:
       - firmware-amazon.deb
+      - firmware-mt7668.deb
       - kernel.deb
+      - wlan.deb
       - pool-partitions.deb
       - usb-network-gadget.deb
