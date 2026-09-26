@@ -7,6 +7,10 @@ actions:
     description: Installing Iara Linux APT source
     source: overlay-apt/
     destination: /
+  - action: overlay
+    description: Setting the hostname
+    source: overlay-hostname/
+    destination: /
   - action: run
     description: Setting up a default user
     chroot: true
