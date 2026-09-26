@@ -1,0 +1,13 @@
+{{ $architecture := or .architecture "arm64" }}
+
+architecture: {{ $architecture }}
+
+actions:
+  - action: overlay
+    description: Installing Iara Linux APT source
+    source: overlay-apt/
+    destination: /
+  - action: run
+    description: Setting up a default user
+    chroot: true
+    script: scripts/setup-default-user.sh

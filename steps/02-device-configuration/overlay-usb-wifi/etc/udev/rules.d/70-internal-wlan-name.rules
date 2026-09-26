@@ -1,0 +1,4 @@
+# Sloane uses a MT7662U USB Wi-Fi module connected internally.
+# Keep the wlan0 name for it as it is the primary wireless interface
+ACTION=="add", SUBSYSTEM=="net", DRIVERS=="mt76x2u", NAME="$kernel"
+# TODO: Add Rook's internal Broadcom USB chipset

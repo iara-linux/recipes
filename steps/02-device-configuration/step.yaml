@@ -1,0 +1,28 @@
+{{ $architecture := or .architecture "arm64" }}
+
+architecture: {{ $architecture }}
+
+actions:
+# beginregion Firmware
+  - action: apt
+    description: Installing firmware packages
+    recommends: true
+    packages:
+      - firmware-mediatek
+  - action: overlay
+    description: Installing internal USB Wi-Fi configuration files
+    source: overlay-usb-wifi/
+    destination: /
+#endregion
+# beginregion EXTLINUX
+  - action: apt
+    description: Installing packages needed for EXTLINUX
+    recommends: true
+    packages:
+      - u-boot-menu
+      - initramfs-tools
+  - action: overlay
+    description: Installing EXTLINUX configuration files
+    source: overlay-extlinux/
+    destination: /
+#endregion

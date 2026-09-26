@@ -1,0 +1,15 @@
+{{ $architecture := or .architecture "arm64" }}
+
+architecture: {{ $architecture }}
+# TODO: Autogenerate this file?
+
+actions:
+  - action: recipe
+    description: Step 0, Debian
+    recipe: 00-debian/step.yaml
+  - action: recipe
+    description: Step 1, Iara Linux
+    recipe: 01-iara/step.yaml
+  - action: recipe
+    description: Step 2, Device configuration
+    recipe: 02-device-configuration/step.yaml

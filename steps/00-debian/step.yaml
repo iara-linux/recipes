@@ -1,0 +1,32 @@
+{{ $architecture := or .architecture "arm64" }}
+{{ $suite := or .suite "trixie" }}
+
+architecture: {{ $architecture }}
+
+actions:
+  - action: debootstrap
+    description: Bootstrapping Debian
+    suite: {{ $suite }}
+    components:
+      - main
+      - contrib
+      - non-free
+      - non-free-firmware
+    mirror: https://deb.debian.org/debian
+
+  - action: apt
+    description: Installing tasksel
+    packages:
+      - tasksel
+  
+  - action: run
+    description: Using tasksel to install standard Debian components
+    chroot: true
+    script: scripts/install-standard-system.sh
+
+  - action: apt
+    description: Installing useful packages
+    recommends: true
+    packages:
+      - sudo
+      - nano

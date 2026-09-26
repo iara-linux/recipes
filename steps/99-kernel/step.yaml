@@ -1,0 +1,10 @@
+{{ $architecture := or .architecture "arm64" }}
+
+architecture: {{ $architecture }}
+
+actions:
+  - action: apt
+    description: Installing the Iara Linux kernel
+    packages:
+      - linux-image-iara
+
