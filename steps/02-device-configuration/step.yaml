@@ -3,9 +3,9 @@
 architecture: {{ $architecture }}
 
 actions:
-# beginregion Firmware
+# beginregion Wi-Fi
   - action: apt
-    description: Installing firmware packages
+    description: Installing Wi-Fi firmware packages
     recommends: true
     packages:
       - firmware-mediatek
@@ -13,7 +13,12 @@ actions:
     description: Installing internal USB Wi-Fi configuration files
     source: overlay-usb-wifi/
     destination: /
-#endregion
+  - action: apt
+    description: Installing NetworkManager
+    recommends: true
+    packages:
+      - network-manager
+# endregion
 # beginregion EXTLINUX
   - action: apt
     description: Installing packages needed for EXTLINUX
@@ -25,4 +30,4 @@ actions:
     description: Installing EXTLINUX configuration files
     source: overlay-extlinux/
     destination: /
-#endregion
+# endregion
