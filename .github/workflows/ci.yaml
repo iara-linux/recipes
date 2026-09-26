@@ -1,0 +1,23 @@
+name: Build Iara Linux Image
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/go-debos/debos:main
+      options: --device=/dev/kvm
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Iara Linux Image
+        run: debos --fakemachine-backend=kvm base.yaml
+      - name: Upload Iara Linux Image Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: iara-linux-image
+          path: |
+            *.img
+            *.tar.gz
