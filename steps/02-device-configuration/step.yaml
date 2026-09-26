@@ -31,3 +31,8 @@ actions:
     source: overlay-extlinux/
     destination: /
 # endregion
+  - action: apt
+    description: Installing other necessary packages
+    recommends: true
+    packages:
+      - pool-partitions

@@ -27,6 +27,7 @@ actions:
     mountpoints:
       - mountpoint: /
         partition: root
+        options: [ x-systemd.growfs ]
       - mountpoint: /boot
         partition: boot
 
